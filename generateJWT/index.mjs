@@ -10,7 +10,7 @@ export const handler = async (event) => {
 
     if (!user) {
         response.statusCode = 400;
-        response.body = JSON.stringify({ errorMessage: "Unvalid body, must contain." });
+        response.body = JSON.stringify({ errorMessage: "Unvalid body, must contain user." });
         return response;
     }
 
