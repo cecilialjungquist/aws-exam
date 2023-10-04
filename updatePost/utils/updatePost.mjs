@@ -6,22 +6,24 @@ async function updatePost(post, valuesToUpdate) {
     let { id, title, content } = post;
 
     if (valuesToUpdate.title) {
-        title = valuesToUpdate.title;
+        title = { S: valuesToUpdate.title };
     }
 
     if (valuesToUpdate.content) {
-        content = valuesToUpdate.content;
+        content = { S: valuesToUpdate.content };
     }
 
 
     const params = {
         TableName: "BlogPosts",
         Item: {
-            id: id,
-            title: { S: title },
-            content: { S: content }
+            id,
+            title,
+            content
         }
     };
+    
+    console.log(params.Item);
 
     const command = new PutItemCommand(params);
 

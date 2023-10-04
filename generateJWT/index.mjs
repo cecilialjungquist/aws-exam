@@ -8,9 +8,9 @@ export const handler = async (event) => {
     const user = body.user;
     const secretKey = '123abc';
 
-    if (!(user && secretKey)) {
+    if (!user) {
         response.statusCode = 400;
-        response.body = JSON.stringify({ errorMessage: "Unvalid body, must contain user and secretKey." });
+        response.body = JSON.stringify({ errorMessage: "Unvalid body, must contain." });
         return response;
     }
 
@@ -30,7 +30,7 @@ export const handler = async (event) => {
         console.error(error);
 
         response.statusCode = 500,
-        response.body = JSON.stringify({ errorMessage: 'Internal Server Error' });
+        response.body = JSON.stringify({ errorMessage: 'Opps! Something went wrong.' });
         return response;
     }
 };

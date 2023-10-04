@@ -1,11 +1,10 @@
 import { createPost } from './utils/createPost.mjs';
 
 export const handler = async (event, context) => {
-    console.log(event);
 
     let response = {};
 
-    const body = event.body ? JSON.parse(event.body) : { title: '', content: ''};
+    const body = event.body ? JSON.parse(event.body) : {};
     const title = body.title;
     const content = body.content;
 

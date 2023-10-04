@@ -25,6 +25,12 @@ export const handler = async (event) => {
         title: body.title,
         content: body.content
     };
+    
+    if (!valuesToUpdate.title && !valuesToUpdate.content) {
+        response.statusCode = 400;
+        response.body = JSON.stringify({ errorMessage: "Missing title or content to update." });
+        return response;
+    }
 
     await updatePost(post, valuesToUpdate);
 

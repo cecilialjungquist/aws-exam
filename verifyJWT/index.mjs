@@ -2,34 +2,39 @@ import jwt from 'jsonwebtoken';
 
 export const handler = async (event) => {
 
-    let response = {};
+    let response = {
+        policyDocument: {
+            Version: '2012-10-17',
+            Statement: [
+                {
+                    Action: 'execute-api:Invoke',
+                    Effect: 'Deny',
+                    Resource: event.methodArn,
+                },
+            ],
+        },
+    };
 
     try {
         let token = event.headers.authorization;
 
         if (!token) {
-            response.statusCode = 401;
-            response.body = JSON.stringify({ message: 'No token provided.' });
             return response;
         }
+
         token = token.replace('Bearer ', '');
 
         const decodedToken = jwt.verify(token, '123abc');
 
-        console.log('Decoded token:', decodedToken);
+        if (decodedToken.role !== 'admin') {
+            return response;
+        }
 
-        response.statusCode = 200;
-        response.body = JSON.stringify({ message: 'Token is valid', decodedToken });
+        response.policyDocument.Statement[0].Effect = 'Allow';
         return response;
-
     } catch (error) {
         console.error('Token verification failed:', error);
 
-        response.statusCode = 401;
-        response.body = JSON.stringify({ message: 'Token is invalid' });
         return response;
     }
 };
-
-
-

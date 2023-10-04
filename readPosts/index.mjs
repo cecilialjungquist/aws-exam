@@ -12,10 +12,10 @@ export const handler = async (event) => {
     } catch (error) {
         console.error(error);
 
-        response.statusCode = 400;
+        response.statusCode = 500;
         response.body = JSON.stringify({
             error: error,
-            errorMessage: "We've encounted an error."
+            errorMessage: "Ooops! Something went wrong."
         })
     }
 

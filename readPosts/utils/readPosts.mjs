@@ -1,5 +1,4 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-
 const client = new DynamoDBClient({ region: 'eu-north-1' });
 
 async function readPosts() {
